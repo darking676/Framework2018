@@ -109,7 +109,7 @@ public class GuestDao {
 		}finally{
 			if(conn!=null)conn.close();
 		}
-		return result;
+		return result; 
 	}
 	
 }
