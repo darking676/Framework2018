@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/add.do")
-public class AddController extends HttpServlet {
+import com.bit.utils.BitController;
+
+
+public class AddController implements BitController {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/view/add.jsp").forward(req, resp);
+	public String execute(HttpServletRequest req) throws Exception {
+		
+		return "add";
 	}
 }

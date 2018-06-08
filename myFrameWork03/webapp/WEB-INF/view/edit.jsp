@@ -33,26 +33,31 @@
 			<div class="col-md-12">
 			<!-- content start -->
 			<div class="jumbotron">
-	 			<h2>입력 페이지</h2>
-			 	<p>입력하실 내용을 작성해주세요</p>
+	 			<h2>수정 페이지</h2>
 			</div>
-			<form action="insert.do" class="form-horizontal" method="post">
+			<form action="update.do" class="form-horizontal"  method="post">
 				<div class="form-group">
 				<label for="sabun" class="col-sm-2 control-label">sabun</label>
 				<div class="col-sm-10">
-				<input placeholder="사번을 입력" class="form-control" type="text" name="sabun" id="sabun" />
+				<input value="${bean.sabun }" placeholder="사번을 입력" class="form-control" type="text" name="sabun" id="sabun" readonly="readonly"/>
 				</div>
 				</div>
 				<div class="form-group">
 				<label for="name" class="col-sm-2 control-label">name</label>
 				<div class="col-sm-10">
-				<input placeholder="이름을 입력" class="form-control" type="text" name="name" id="name" />
+				<input value="${bean.name }" placeholder="이름을 입력" class="form-control" type="text" name="name" id="name" />
+				</div>
+				</div>
+				<div class="form-group">
+				<label for="nalja" class="col-sm-2 control-label">nalja</label>
+				<div class="col-sm-10">
+				<input value="${bean.name }" placeholder="이름을 입력" class="form-control" type="text" name="nalja" id="nalja" disabled="disabled" />
 				</div>
 				</div>
 				<div class="form-group">
 				<label for="pay" class="col-sm-2 control-label">pay</label>
 				<div class="col-sm-10">
-				<input placeholder="금액을 입력" class="form-control" type="text" name="pay" id="pay" />
+				<input value="${bean.pay }" placeholder="금액을 입력" class="form-control" type="text" name="pay" id="pay" />
 				</div>
 				</div>
 				<div class="form-group">
@@ -61,6 +66,8 @@
 				</div>
 				</div>
 			</form>
+			<a href="edit.do?idx=${bean.sabun }" class="btn btn-warning" role="button">수정</a>
+			<a href="delete.do?idx=${bean.sabun }" class="btn btn-danger" role="button">삭제</a>
 			<!-- content end -->
 			</div>
 		</div>
