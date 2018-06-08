@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.bit.model.entity.GuestVo;
 
-public abstract class GuestDao {
+public class GuestDao {
 	private Logger log=Logger.getLogger(getClass());
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -42,75 +42,16 @@ public abstract class GuestDao {
 	}
 	
 	public List<GuestVo> selectAll() throws SQLException{
+		List<GuestVo> list = new ArrayList<GuestVo>();
 		String sql="SELECT * FROM GUEST ORDER BY SABUN DESC";
-		return executeQuery(sql);
-	}
-	
-	public GuestVo selectOne(int pk) throws SQLException{
-		String sql="SELECT * FROM GUEST WHERE SABUN=?";
-		return (GuestVo) executeObject(sql,new Object[]{pk});
-	}
-	
-	public void insertOne(GuestVo bean) throws Exception{
-		String sql="INSERT INTO GUEST VALUES (?,?,SYSDATE,?)";
-		executeUpdate(sql,new Object[]{bean.getSabun(),bean.getName(),bean.getPay()});
-	}
-	
-	public int updateOne(GuestVo bean) throws Exception{
-		String sql="UPDATE GUEST SET NAME=?,PAY=? WHERE SABUN=?";
-		Object[] objs={bean.getName(),bean.getPay(),bean.getSabun()};
-		return executeUpdate(sql,objs);
-	}
-	
-	public int deleteOne(int pk) throws Exception{
-		String sql="DELETE FROM GUEST WHERE SABUN=?";
-		Object[] objs={pk};
-		return executeUpdate(sql,objs);
-	}
-	
-	public abstract Object mapper(ResultSet rs) throws SQLException;
-//	private Object mapper() throws SQLException{
-//		GuestVo bean = new GuestVo(
-//				rs.getInt("sabun"), rs.getString("name")
-//				, rs.getDate("nalja"), rs.getInt("pay")
-//				);
-//		return bean;
-//	}
-	
-	private List executeQuery(String sql) throws SQLException{
-		return executeQuery(sql,new Object[]{});
-		
-	}
-	private Object executeObject(String sql,Object[] objs) throws SQLException{
-		List list = new ArrayList();
 		try{
 			pstmt=conn.prepareStatement(sql);
-			for(int i=0; i<objs.length; i++){
-				pstmt.setObject(i+1, objs[i]);
-			}
 			rs=pstmt.executeQuery();
 			while(rs.next()){
-				Object bean = mapper(rs);
-				log.debug(bean);
-				list.add(bean);
-			}
-		} finally {
-			connClose();
-		}
-		log.debug(list.size());
-		return list.get(0);
-		
-	}
-	private List executeQuery(String sql,Object[] objs) throws SQLException{
-		List list = new ArrayList();
-		try{
-			pstmt=conn.prepareStatement(sql);
-			for(int i=0; i<objs.length; i++){
-				pstmt.setObject(i+1, objs[i]);
-			}
-			rs=pstmt.executeQuery();
-			while(rs.next()){
-				Object bean = mapper(rs);
+				GuestVo bean = new GuestVo(
+						rs.getInt("sabun"), rs.getString("name")
+						, rs.getDate("nalja"), rs.getInt("pay")
+						);
 				log.debug(bean);
 				list.add(bean);
 			}
@@ -119,16 +60,50 @@ public abstract class GuestDao {
 		}
 		log.debug(list.size());
 		return list;
-		
 	}
 	
-	private int executeUpdate(String sql, Object[] objs) throws SQLException{
-		int result=0;
+	public GuestVo selectOne(int pk) throws SQLException{
+		GuestVo bean = new GuestVo();
+		String sql="SELECT * FROM GUEST WHERE SABUN=?";
 		try{
 			pstmt=conn.prepareStatement(sql);
-			for(int i=0; i<objs.length; i++){
-				pstmt.setObject(i+1, objs[i]);
+			pstmt.setInt(1, pk);
+			rs=pstmt.executeQuery();
+			if(rs.next()){
+				bean.setSabun(rs.getInt("sabun"));
+				bean.setName(rs.getString("name"));
+				bean.setNalja(rs.getDate("nalja"));
+				bean.setPay(rs.getInt("pay"));
 			}
+		}finally{
+			connClose();
+		}
+		log.debug(bean);
+		return bean;
+	}
+	
+	public void insertOne(GuestVo bean) throws Exception{
+		String sql="INSERT INTO GUEST VALUES (?,?,SYSDATE,?)";
+		try{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bean.getSabun());
+			pstmt.setString(2, bean.getName());
+			pstmt.setInt(3, bean.getPay());
+			int result=pstmt.executeUpdate();
+			log.debug(result>0);
+		}finally{
+			connClose();
+		}
+	}
+	
+	public int updateOne(GuestVo bean) throws Exception{
+		int result=0;
+		String sql="UPDATE GUEST SET NAME=?,PAY=? WHERE SABUN=?";
+		try{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, bean.getName());
+			pstmt.setInt(2, bean.getPay());
+			pstmt.setInt(3, bean.getSabun());
 			result=pstmt.executeUpdate();
 			log.debug(result>0);
 		}finally{
@@ -137,6 +112,19 @@ public abstract class GuestDao {
 		return result;
 	}
 	
+	public int deleteOne(int pk) throws Exception{
+		int result=0;
+		String sql="DELETE FROM GUEST WHERE SABUN=?";
+		try{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, pk);
+			result=pstmt.executeUpdate();
+			log.debug(result>0);
+		}finally{
+			connClose();
+		}
+		return result;
+	}
 	public void connClose() throws SQLException{
 		if(auto)conn.rollback();
 		if(conn!=null)conn.close();		
