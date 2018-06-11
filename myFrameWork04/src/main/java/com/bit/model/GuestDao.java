@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.bit.model.entity.GuestVo;
 
 public class GuestDao {
+	Logger log = Logger.getLogger(this.getClass());
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
@@ -34,6 +37,7 @@ public class GuestDao {
 	}
 	
 	public List<GuestVo> selectAll() throws SQLException{
+		log.debug("selectAll()");
 		List<GuestVo> list = new ArrayList<GuestVo>();
 		String sql="SELECT * FROM GUEST";
 		try {
@@ -54,6 +58,7 @@ public class GuestDao {
 	}
 	
 	public void insertOne(GuestVo bean) throws SQLException{
+		log.debug(bean);
 		String sql="insert into guest values (?,?,sysdate,?)";
 		try{
 			pstmt=conn.prepareStatement(sql);
@@ -67,6 +72,7 @@ public class GuestDao {
 	}
 	
 	public GuestVo selectOne(int pk) throws SQLException{
+		log.debug(pk);
 		GuestVo bean = new GuestVo();
 		String sql="select * from guest where sabun=?";
 		try{
@@ -83,6 +89,34 @@ public class GuestDao {
 			close();
 		}
 		return bean;
+	}
+	
+	public int updateOne(GuestVo bean) throws SQLException{
+		int result=0;
+		String sql="UPDATE GUEST SET NAME=?, PAY=? WHERE SABUN=?";
+		try{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, bean.getName());
+			pstmt.setInt(2, bean.getPay());
+			pstmt.setInt(3, bean.getSabun());
+			result=pstmt.executeUpdate();
+		}finally{
+			close();
+		}
+		return result;
+	}
+	
+	public int deleteOne(int pk) throws SQLException{
+		int result=0;
+		String sql="DELETE FROM GUEST WHERE SABUN=?";
+		try{
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, pk);
+			result=pstmt.executeUpdate();
+		}finally{
+			close();
+		}
+		return result;
 	}
 
 	private void close() throws SQLException {

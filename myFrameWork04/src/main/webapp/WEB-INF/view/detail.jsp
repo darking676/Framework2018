@@ -40,7 +40,7 @@
 			  <li class="active">${bean.sabun }</li>
 			</ol>
 			<h1>${view } page</h1>
-			<form>
+			<form action="update.do" method="post">
 				<div class="form-group">
 					<label for="sabun">sabun</label>
 					<input value="${bean.sabun }" type="text" name="sabun" id="sabun" class="form-control" readonly="readonly"/>

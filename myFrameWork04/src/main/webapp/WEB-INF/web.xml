@@ -8,26 +8,6 @@
   <servlet>
   	<servlet-name>front</servlet-name>
   	<servlet-class>com.bit.utils.FrontController</servlet-class>
-  	<init-param>
-  		<param-name>/list.do</param-name>
-  		<param-value>com.bit.controller.ListController</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>/add.do</param-name>
-  		<param-value>com.bit.controller.AddController</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>/insert.do</param-name>
-  		<param-value>com.bit.controller.InsertController</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>/detail.do</param-name>
-  		<param-value>com.bit.controller.DetailController</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>/edit.do</param-name>
-  		<param-value>com.bit.controller.EditController</param-value>
-  	</init-param>
   </servlet>
   <servlet-mapping>
   	<servlet-name>front</servlet-name>
