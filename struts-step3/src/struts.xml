@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+    <struts>
+    
+    	<package name="crud" namespace="/" extends="struts-default" >
+    		<action name="list" class="com.bit.action.ListAction">
+    			<result>/list.jsp</result>
+    		</action>
+    		<action name="detail" class="com.bit.action.DetailAction">
+    			<interceptor-ref name="params"/>
+    			<result>/detail.jsp</result>
+    		</action>
+    		<action name="edit" class="com.bit.action.EditAction">
+    			<interceptor-ref name="params"/>
+    			<result>/detail.jsp</result>
+    		</action>
+    		<action name="update" class="com.bit.action.UpdateAction">
+    			<interceptor-ref name="params"/>
+    			<interceptor-ref name="validation"/>
+                <interceptor-ref name="workflow"/>
+    			<result name="input">/detail.jsp</result>
+    			<result name="error">/err.jsp</result>
+    			<result name="success" type="redirect">list.action</result>
+    		</action>
+    		<action name="add" class="com.bit.action.AddAction">
+    			<result>/add.jsp</result>
+    		</action>
+    		<action name="insert" class="com.bit.action.InsertAction">
+    			<interceptor-ref name="params"/>
+    			<result type="redirect">list.action</result>
+    		</action>
+    	</package>
+    
+    </struts>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
