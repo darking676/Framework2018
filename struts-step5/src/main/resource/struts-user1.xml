@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+
+	<package name="user1" namespace="/guest" extends="page1">
+		<action name="list" class="com.bit.struts2.action.GuestAction" method="list">
+			<result>/list.jsp</result>
+		</action>
+		<action name="detail" class="com.bit.struts2.action.GuestAction" method="one">
+			<result name="success">/detail.jsp</result>
+		</action>
+		<action name="edit" class="com.bit.struts2.action.GuestAction" method="one">
+			<result name="success">/edit.jsp</result>
+		</action>
+		<action name="add" class="com.bit.struts2.action.GuestAction">
+			<result>/add.jsp</result>
+		</action>
+		<action name="update" class="com.bit.struts2.action.GuestAction" method="update">
+			<result name="error" type="redirectAction">
+				<param name="actionName">edit</param>
+				<param name="idx">${bean.sabun}</param>				
+			</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">detail</param>
+				<param name="idx">${bean.sabun}</param>
+			</result>
+		</action>
+		<action name="insert" class="com.bit.struts2.action.GuestAction" method="add">
+			<result type="redirectAction">
+				<param name="actionName">list</param>
+				<param name="msg">success</param>
+			</result>
+			
+		</action>
+		<action name="delete" class="com.bit.struts2.action.GuestAction" method="delete">
+			<result type="redirectAction" name="error">
+				<param name="actionName">list</param>
+				<param name="msg">fail</param>
+			</result>
+			<result type="redirectAction" name="success">
+				<param name="actionName">list</param>
+				<param name="msg">success</param>
+			</result>
+			
+		</action>
+	</package>
+
+</struts>
