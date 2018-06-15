@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.bit.struts2.model.GuestDao;
+import com.bit.struts2.model.GuestDao2;
 import com.bit.struts2.model.entity.GuestVo;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -45,6 +46,7 @@ public class GuestAction implements ModelDriven<GuestVo> {
 
 	public String list() throws Exception{
 		log.debug("execute()");
+		GuestDao2 dao = new GuestDao2();
 		list=dao.selectAll();
 		return "success";
 	}
