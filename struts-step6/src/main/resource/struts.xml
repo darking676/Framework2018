@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+    
+    <struts>
+    
+    <package name="main" namespace="/" extends="struts-default">
+    	<action name="index" class="com.bit.step6.action.DefaultAction">
+    		<result>/index.jsp</result>
+    	</action>
+    	<action name="list" class="com.bit.step6.action.DefaultAction" method="list">
+    		<result name="login">/login.jsp</result>
+    		<result name="success">/list.jsp</result>
+    	</action>
+    	<action name="detail" class="com.bit.step6.action.DefaultAction" method="one">
+    		<result name="login">/login.jsp</result>
+    		<result name="success">/detail.jsp</result>
+    	</action>
+    	<action name="add" class="com.bit.step6.action.DefaultAction">
+    		<result name="login">/login.jsp</result>
+    		<result name="success">/add.jsp</result>
+    	</action>
+    	<action name="insert" class="com.bit.step6.action.DefaultAction" method="add">
+    		<result name="login">/login.jsp</result>
+    		<result name="success" type="redirect">list.action</result>
+    	</action>
+    	<action name="edit" class="com.bit.step6.action.DefaultAction" method="one">
+    		<result name="login">/login.jsp</result>
+    		<result name="success">/edit.jsp</result>
+    	</action>
+    	<action name="update" class="com.bit.step6.action.DefaultAction" method="edit">
+    		<result name="login">/login.jsp</result>
+    		<result name="input" type="redirectAction">
+    			<param name="actionName">edit</param>
+    			<param name="sabun">${bean.sabun}</param>
+    		</result>
+    		<result name="error" type="redirectAction">
+    			<param name="actionName">edit</param>
+    			<param name="sabun">${bean.sabun}</param>
+    		</result>
+    		<result name="success" type="redirectAction">
+    			<param name="actionName">detail</param>
+    			<param name="sabun">${bean.sabun}</param>
+    		</result>
+    	</action>
+    	<action name="delete" class="com.bit.step6.action.DefaultAction" method="del">
+    		<result name="login">/login.jsp</result>
+    		<result name="error" type="redirectAction">
+    			<param name="actionName">detail</param>
+    			<param name="sabun">${bean.sabun}</param>
+    		</result>
+    		<result name="success" type="redirect">list.action</result>
+    	</action>
+    	<action name="login" class="com.bit.step6.action.DefaultAction">
+    		<result name="login">/login.jsp</result>
+    		<result name="success">/login.jsp</result>
+    	</action>
+    	<action name="result" class="com.bit.step6.action.DefaultAction" method="login">
+    		<result name="login">/login.jsp</result>
+    		<result name="success">/result.jsp</result>
+    	</action>
+    </package>
+    
+    </struts>
