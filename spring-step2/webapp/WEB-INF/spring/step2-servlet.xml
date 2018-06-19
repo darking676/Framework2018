@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- url과 컨트롤러 매핑방법 선택 -->
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>
+	
+	<!-- 
+	<bean name="/index.bit" class="com.bit.spring02.controller.IndexController"></bean> 
+	-->
+	<bean name="/index.bit" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="index"></property>
+	</bean>
+	<bean name="/list.bit" class="com.bit.spring02.controller.ListController"></bean>
+	<bean name="/add.bit" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="add"></property>
+	</bean>
+	<bean name="/insert.bit" class="com.bit.spring02.controller.Add2Controller">
+		<property name="supportedMethods" value="POST"></property>
+	</bean>
+	<bean name="/detail.bit" class="com.bit.spring02.controller.DetailController"></bean>
+	<bean name="/edit.bit" class="com.bit.spring02.controller.EditController">
+		<property name="supportedMethods" value="GET"></property>
+	</bean>
+	<bean name="/update.bit" class="com.bit.spring02.controller.Update2Controller">
+		<property name="supportedMethods" value="POST"></property>
+		<property name="commandClass" value="com.bit.spring02.model.entity.GuestVo"></property>
+		<property name="commandName" value="bean"></property>
+	</bean>
+	<bean name="/delete.bit" class="com.bit.spring02.controller.DeleteController">
+		<property name="supportedMethods" value="POST"></property>
+	</bean>
+	
+	<!-- view처리기능 선택방법 선택 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
