@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://203.236.209.221:3306/mydb?serverTimezone=UTC"></property>
+		<property name="username" value="scott"></property>
+		<property name="password" value="tiger"></property>
+	</bean>
+
+	<bean id="dao" class="com.bit.spring05.model.GuestDao2Imf">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/index.bit">index</prop>
+				<prop key="/guest/list.bit">list</prop>
+				<prop key="/guest/detail.bit">detail</prop>
+				<prop key="/guest/add.bit">add</prop>
+				<prop key="/guest/edit.bit">edit</prop>
+				<prop key="/guest/update.bit">update</prop>
+				<prop key="/guest/delete.bit">del</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="index" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="index"></property>
+	</bean>
+	
+	<bean id="list" class="com.bit.spring05.controller.ListController">
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="detail" class="com.bit.spring05.controller.OneController">
+		<property name="dao" ref="dao"></property>	
+		<property name="viewName" value="guest/detail"></property>
+	</bean>
+	<bean id="add" class="com.bit.spring05.controller.AddController">
+		<property name="commandClass" value="com.bit.spring05.model.entity.GuestVo"></property>
+		<property name="commandName" value="bean"></property>
+		<property name="dao" ref="dao"></property>
+		<property name="formView" value="guest/add"></property>
+		<property name="successView" value="redirect:/guest/list.bit"></property>
+	</bean>
+	<bean id="edit" class="com.bit.spring05.controller.OneController">
+		<property name="dao" ref="dao"></property>
+		<property name="viewName" value="guest/edit"></property>
+	</bean>
+	<bean id="update" class="com.bit.spring05.controller.EditController">
+		<property name="supportedMethods" value="POST"></property>
+		<property name="commandClass" value="com.bit.spring05.model.entity.GuestVo"></property>
+		<property name="commandName" value="bean"></property>
+		<property name="dao" ref="dao"></property>
+	</bean>
+	<bean id="del" class="com.bit.spring05.controller.DelController">
+		<property name="supportedMethods" value="POST"></property>
+		<property name="dao" ref="dao"></property>
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+</beans>
