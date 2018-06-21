@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--  -->
+	<bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+	
+	<bean name="/index.bit" 
+		class="com.bit.spring06.controller.DefaultController"
+		p:viewName="index"
+		/>
+	
+	<bean name="/list.bit" 
+		class="com.bit.spring06.controller.ListController"
+		p:guestDao-ref="guestDao"
+		/>
+		
+	<bean name="/detail.bit" 
+		class="com.bit.spring06.controller.BeanController" 
+		p:guestDao-ref="guestDao" p:viewName="detail"/>
+		
+	<bean name="/add.bit"
+		class="com.bit.spring06.controller.DefaultController"
+		p:viewName="add"
+		/>
+		
+	<bean name="/insert.bit"
+		class="com.bit.spring06.controller.AddController"
+		p:supportedMethods="POST"
+		p:guestDao-ref="guestDao"
+		p:commandClass="com.bit.spring06.model.entity.GuestVo"
+		p:commandName="bean"
+		/>
+	<bean name="/edit.bit" 
+		class="com.bit.spring06.controller.BeanController" 
+		p:guestDao-ref="guestDao" p:viewName="edit"/>
+		
+	<bean name="/update.bit"
+		class="com.bit.spring06.controller.EditController"
+		p:supportedMethods="POST"
+		p:guestDao-ref="guestDao"
+		p:commandClass="com.bit.spring06.model.entity.GuestVo"
+		p:commandName="bean"
+		/>
+		
+	<bean name="/delete.bit" 
+		class="com.bit.spring06.controller.DelController"
+		p:guestDao-ref="guestDao"/>
+<!--  -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>
